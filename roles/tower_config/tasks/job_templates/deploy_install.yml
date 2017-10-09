@@ -1,17 +1,33 @@
 ---
+#- name: Configure Job Template for Deploy-Install
+#  tower_job_template:
+#    tower_host: "{{ tower_host }}"
+#    tower_username: "{{ tower_username }}"
+#    tower_password: "{{ tower_password }}"
+#    job_type: run
+#    name: "{{ tower_job_template_deploy_install }}"
+#    description: "{{ tower_job_template_deploy_install_description }}"
+#    state: present
+#    inventory: "{{ tower_inventory }}"
+#    project: "{{ tower_project_install }}"
+#    playbook: "{{ tower_job_template_deploy_install_playbook }}"
+#    become_enabled: "{{ tower_job_template_deploy_install_become_enabled }}"
+#    machine_credential: "{{ tower_credential_machine }}"
+#    cloud_credential: "{{ tower_credential_cloud }}"
+
+
 - name: Configure Job Template for Deploy-Install
-  tower_job_template:
-    tower_host: "{{ tower_host }}"
-    tower_username: "{{ tower_username }}"
-    tower_password: "{{ tower_password }}"
-    job_type: run
-    name: "{{ tower_job_template_deploy_install }}"
-    description: "{{ tower_job_template_deploy_install_description }}"
-    state: present
-    inventory: "{{ tower_inventory }}"
-    project: "{{ tower_project_install }}"
-    playbook: "{{ tower_job_template_deploy_install_playbook }}"
-    become_enabled: "{{ tower_job_template_deploy_install_become_enabled }}"
-    machine_credential: "{{ tower_credential_machine }}"
-    cloud_credential: "{{ tower_credential_cloud }}"
+  command: >
+    tower-cli job_template create
+      -h "{{ tower_host }}"
+      -u "{{ tower_username }}"
+      -p "{{ tower_password }}"
+      -n "{{ tower_job_template_deploy_install }}"
+      -d "{{ tower_job_template_deploy_install_description }}"
+      --inventory "{{ tower_inventory }}"
+      --project "{{ tower_project_install }}"
+      --playbook "{{ tower_job_template_deploy_install_playbook }}"
+      --become-enabled 1
+      --machine-credential "{{ tower_credential_machine }}"
+      --cloud-credential "{{ tower_credential_cloud }}"
 ...
